@@ -69,7 +69,7 @@ module DiscourseChatIntegration
         message
       end
 
-      def build_prefix_message(post, rule)
+      def self.build_prefix_message(post, rule)
         if post.is_first_post? && rule.new_topic_prefix
           return rule.new_topic_prefix
         elsif !post.is_first_post? && rule.new_reply_prefix
