@@ -29,7 +29,7 @@ module DiscourseChatIntegration
         "http:#{url}"
       end
 
-      def self.generate_discord_message(post)
+      def self.generate_discord_message(post, rule)
 
         display_name = "@#{post.user.username}"
         full_name = post.user.name || ""
@@ -47,7 +47,7 @@ module DiscourseChatIntegration
 
         message = {
           #content: SiteSetting.chat_integration_discord_message_content,
-          content: "test test 123 test",
+          content: rule.new_topic_prefix + " " + rule.new_reply_prefix,
           embeds: [{
             title: "#{topic.title} #{(category == '[uncategorized]') ? '' : category} #{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
             color: topic.category ? topic.category.color.to_i(16) : nil,
@@ -67,7 +67,7 @@ module DiscourseChatIntegration
       def self.trigger_notification(post, channel, rule)
         # Adding ?wait=true means that we actually get a success/failure response, rather than returning asynchronously
         webhook_url = "#{channel.data['webhook_url']}?wait=true"
-        message = generate_discord_message(post)
+        message = generate_discord_message(post, rule)
         response = send_message(webhook_url, message)
 
         if !response.kind_of?(Net::HTTPSuccess)

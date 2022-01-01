@@ -55,6 +55,8 @@ export default RestModel.extend({
   filter: "watch",
   type: "normal",
   error_key: null,
+  new_topic_prefix: "",
+  new_reply_prefix: "",
 
   @observes("type")
   removeUnneededInfo() {
@@ -88,6 +90,8 @@ export default RestModel.extend({
       "group_id",
       "tags",
       "filter",
+      "new_topic_prefix",
+      "new_reply_prefix",
     ]);
   },
 
@@ -99,6 +103,8 @@ export default RestModel.extend({
       "group_id",
       "tags",
       "filter",
+      "new_topic_prefix",
+      "new_reply_prefix",
     ]);
   },
 });
