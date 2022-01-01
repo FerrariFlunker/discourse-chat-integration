@@ -57,7 +57,7 @@ export default RestModel.extend({
   error_key: null,
   new_topic_prefix: null,
   new_reply_prefix: null,
-  MSG_FIELDS = "Fields: {username}, {creator}, {title}, {category}",
+  MSG_FIELDS: "Fields: {username}, {creator}, {title}, {category}",
 
   @observes("type")
   removeUnneededInfo() {
