@@ -29,7 +29,7 @@ module DiscourseChatIntegration
         "http:#{url}"
       end
 
-      def self.generate_discord_message(post, rule)
+      def self.generate_discord_message(post, rule=nil)
 
         display_name = "@#{post.user.username}"
         full_name = post.user.name || ""
@@ -45,9 +45,14 @@ module DiscourseChatIntegration
           category = (topic.category.parent_category) ? "[#{topic.category.parent_category.name}/#{topic.category.name}]" : "[#{topic.category.name}]"
         end
 
+        prefix_message = ''
+        if rule 
+          prefix_message = rule.new_topic_prefix + " " + rule.new_reply_prefix
+        end
+
         message = {
           #content: SiteSetting.chat_integration_discord_message_content,
-          content: rule.new_topic_prefix + " " + rule.new_reply_prefix,
+          content: prefix_message,
           embeds: [{
             title: "#{topic.title} #{(category == '[uncategorized]') ? '' : category} #{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
             color: topic.category ? topic.category.color.to_i(16) : nil,

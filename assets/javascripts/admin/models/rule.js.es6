@@ -55,8 +55,8 @@ export default RestModel.extend({
   filter: "watch",
   type: "normal",
   error_key: null,
-  new_topic_prefix: "",
-  new_reply_prefix: "",
+  new_topic_prefix: " ",
+  new_reply_prefix: " ",
 
   @observes("type")
   removeUnneededInfo() {
