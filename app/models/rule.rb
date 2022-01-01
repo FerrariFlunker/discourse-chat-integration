@@ -2,6 +2,8 @@
 
 class DiscourseChatIntegration::Rule < DiscourseChatIntegration::PluginModel
   # Setup ActiveRecord::Store to use the JSON field to read/write these values
+  @@MSG_FIELDS = {'{username}' => post.user.username, '{title}' =>  post.topic.title, "{category}" => post.topic.category.name}
+
   store :value, accessors: [ :channel_id, :type, :group_id, :category_id, :tags, :filter, :new_topic_prefix, :new_reply_prefix ], coder: JSON
 
   scope :with_type, ->(type) { where("value::json->>'type'=?", type.to_s) }
@@ -47,6 +49,10 @@ class DiscourseChatIntegration::Rule < DiscourseChatIntegration::PluginModel
                                 message: "%{value} is not a valid filter" }
 
   validate :channel_valid?, :category_valid?, :group_valid?, :tags_valid?
+
+  def MSG_FIELDS
+    @@MSG_FIELDS
+  end
 
   def self.key_prefix
     'rule:'.freeze
