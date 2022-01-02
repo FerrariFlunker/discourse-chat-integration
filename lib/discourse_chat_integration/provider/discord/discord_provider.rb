@@ -51,9 +51,6 @@ module DiscourseChatIntegration
           prefix_message = build_prefix_message(post, rule)
         end
 
-        image_url = build_embed_image(post)
-        thumbnail_url = build_embed_thumbnail(post)
-
         message = {
           content: prefix_message,
           embeds: [{
@@ -89,31 +86,7 @@ module DiscourseChatIntegration
         else
           return ""
         end
-      end
-
-      def self.build_embed_image(post)
-        if post.is_first_post?
-          if post.topic.user_chosen_thumbnail_url
-            return post.topic.user_chosen_thumbnail_url
-          else
-            return post.topic.thumbnails[0].url
-          end
-        else
-          return ""
-        end
-      end
-
-      def self.build_embed_thumbnail(post)
-        if !post.is_first_post?
-          if post.topic.user_chosen_thumbnail_url
-            return post.topic.user_chosen_thumbnail_url
-          else
-            return post.topic.thumbnails[0].url
-          end
-        else
-          return ""
-        end
-      end
+      end     
 
       def self.trigger_notification(post, channel, rule)
         # Adding ?wait=true means that we actually get a success/failure response, rather than returning asynchronously
