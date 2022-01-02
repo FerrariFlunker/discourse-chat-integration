@@ -66,7 +66,7 @@ module DiscourseChatIntegration
               icon_url: ensure_protocol(post.user.small_avatar_url)
             },
             fields: [
-              {name: 'Category:', value: ["#{(category == '[uncategorized]') ? '' : category}"](topic.category.url), inline: false}
+              {name: 'Category:', value: "test", inline: false}
             ],
             image: {url: image_url},
             thumbnail: {url: thumbnail_url},
