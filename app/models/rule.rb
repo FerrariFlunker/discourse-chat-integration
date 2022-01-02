@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class DiscourseChatIntegration::Rule < DiscourseChatIntegration::PluginModel
-  @@MSG_FIELDS = {'{username}' => post.user.username, '{title}' =>  post.topic.title, "{category}" => post.topic.category.name}
-
   # Setup ActiveRecord::Store to use the JSON field to read/write these values
   store :value, accessors: [ :channel_id, :type, :group_id, :category_id, :tags, :filter, :new_topic_prefix, :new_reply_prefix ], coder: JSON
 
