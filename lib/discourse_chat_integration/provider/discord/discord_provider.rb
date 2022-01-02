@@ -42,7 +42,7 @@ module DiscourseChatIntegration
 
         category = ''
         if topic.category
-          category = (topic.category.parent_category) ? "[#{topic.category.parent_category.name}/#{topic.category.name}]" : "[#{topic.category.name}]"
+          category = (topic.category.parent_category) ? "#{topic.category.parent_category.name}/#{topic.category.name}" : "#{topic.category.name}"
         end
 
         prefix_message = ''
@@ -50,11 +50,13 @@ module DiscourseChatIntegration
           prefix_message = build_prefix_message(post, rule)
         end
 
+        image_url = build_embed_image(post)
+        thumbnail_url = build_embed_thumbnail(post)
+
         message = {
-          #content: SiteSetting.chat_integration_discord_message_content,
           content: prefix_message,
           embeds: [{
-            title: "#{topic.title} #{(category == '[uncategorized]') ? '' : category} #{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
+            title: topic.title,
             color: topic.category ? topic.category.color.to_i(16) : nil,
             description: post.excerpt(SiteSetting.chat_integration_discord_excerpt_length, text_entities: true, strip_links: true, remap_emoji: true),
             url: post.full_url,
@@ -62,7 +64,17 @@ module DiscourseChatIntegration
               name: display_name,
               url: Discourse.base_url + "/u/" + post.user.username,
               icon_url: ensure_protocol(post.user.small_avatar_url)
-            }
+            },
+            fields: [
+              {name: 'Category:', value: ["#{(category == '[uncategorized]') ? '' : category}"](topic.category.url), inline: false}
+            ],
+            image: {url: image_url},
+            thumbnail: {url: thumbnail_url},
+            footer: {
+              icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png",
+              text: "aloha.pk"
+            },
+            timestamp: DateTime.now.strftime('%m/%d/%Y')
           }]
         }
 
@@ -75,6 +87,30 @@ module DiscourseChatIntegration
           return rule.new_topic_prefix.gsub(/{(.*?)}/, msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix
           return rule.new_reply_prefix.gsub(/{(.*?)}/, msg_fields)
+        else
+          return ""
+        end
+      end
+
+      def self.build_embed_image(post)
+        if post.is_first_post?
+          if post.topic.user_chosen_thumbnail_url
+            return post.topic.user_chosen_thumbnail_url
+          else
+            return post.topic.thumbnails[0].url
+          end
+        else
+          return ""
+        end
+      end
+
+      def self.build_embed_thumbnail(post)
+        if !post.is_first_post?
+          if post.topic.user_chosen_thumbnail_url
+            return post.topic.user_chosen_thumbnail_url
+          else
+            return post.topic.thumbnails[0].url
+          end
         else
           return ""
         end
