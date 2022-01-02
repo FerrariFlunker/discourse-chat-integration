@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "date"
 
 module DiscourseChatIntegration
   module Provider
@@ -65,6 +66,9 @@ module DiscourseChatIntegration
               url: Discourse.base_url + "/u/" + post.user.username,
               icon_url: ensure_protocol(post.user.small_avatar_url)
             },
+            fields: [
+              {name: 'Category:', value: "test", inline: false}
+            ],
             footer: {
               icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png",
               text: "aloha.pk"
