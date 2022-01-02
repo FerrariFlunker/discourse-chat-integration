@@ -68,8 +68,6 @@ module DiscourseChatIntegration
             fields: [
               {name: 'Category:', value: "test", inline: false}
             ],
-            image: {url: image_url},
-            thumbnail: {url: thumbnail_url},
             footer: {
               icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png",
               text: "aloha.pk"
