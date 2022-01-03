@@ -75,8 +75,8 @@ module DiscourseChatIntegration
               icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png"              
             },
             timestamp: DateTime.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
-            *(image: {url: image_url} unless image_url.empty?),
-            *(thumbnail: {url: thumbnail_url} unless image_url.empty?)            
+            image: {url: image_url},
+            thumbnail: {url: thumbnail_url}           
           }]
         }
 
@@ -102,7 +102,7 @@ module DiscourseChatIntegration
             return post.topic.thumbnails[0][:url]
           end
         else
-          return ""
+          return " "
         end
       end
 
@@ -114,7 +114,7 @@ module DiscourseChatIntegration
             return post.topic.thumbnails[0][:url]
           end
         else
-          return ""
+          return " "
         end
       end
 
