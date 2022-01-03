@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require "date"
 
 module DiscourseChatIntegration
   module Provider
@@ -62,8 +61,7 @@ module DiscourseChatIntegration
               name: display_name,
               url: Discourse.base_url + "/u/" + post.user.username,
               icon_url: ensure_protocol(post.user.small_avatar_url)
-            },
-            timestamp: DateTime.now.strftime('%m/%d/%Y')
+            }
           }]
         }
 
@@ -79,7 +77,7 @@ module DiscourseChatIntegration
         else
           return ""
         end
-      end     
+      end
 
       def self.trigger_notification(post, channel, rule)
         # Adding ?wait=true means that we actually get a success/failure response, rather than returning asynchronously
