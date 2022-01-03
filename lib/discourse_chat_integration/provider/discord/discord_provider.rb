@@ -106,7 +106,7 @@ module DiscourseChatIntegration
             return post.topic.thumbnails[0][:url]
           end
         else
-          return nil
+          return "https://i.imgur.com/ZGPxFN2.jpg"
         end
       end
 
@@ -118,7 +118,7 @@ module DiscourseChatIntegration
             return post.topic.thumbnails[0][:url]
           end
         else
-          return nil
+          return "https://i.imgur.com/ZGPxFN2.jpg"
         end
       end
 
