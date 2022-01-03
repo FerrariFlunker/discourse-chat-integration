@@ -102,7 +102,7 @@ module DiscourseChatIntegration
             return post.topic.thumbnails[0][:url]
           end
         else
-          return " "
+          return nil
         end
       end
 
@@ -114,7 +114,7 @@ module DiscourseChatIntegration
             return post.topic.thumbnails[0][:url]
           end
         else
-          return " "
+          return nil
         end
       end
 
