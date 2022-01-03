@@ -51,6 +51,9 @@ module DiscourseChatIntegration
           prefix_message = build_prefix_message(post, rule)
         end
 
+        image_url = build_embed_image(post)
+        thumbnail_url = build_embed_thumbnail(post)
+
         message = {
           content: prefix_message,
           embeds: [{
@@ -73,10 +76,10 @@ module DiscourseChatIntegration
             },
             timestamp: DateTime.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
             image: {
-              url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"
+              url: image_url
             },
             thumbnail: {
-              url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"
+              url: thumbnail_url
             }           
           }]
         }
@@ -92,6 +95,30 @@ module DiscourseChatIntegration
           return rule.new_reply_prefix.gsub(/{(.*?)}/, msg_fields)
         else
           return ""
+        end
+      end
+
+      def self.build_embed_image(post)
+        if post.is_first_post?
+          if post.topic.user_chosen_thumbnail_url.present?
+            return Discourse.base_url + post.topic.user_chosen_thumbnail_url
+          else
+            return post.topic.thumbnails[0][:url]
+          end
+        else
+          return nil
+        end
+      end
+
+      def self.build_embed_thumbnail(post)
+        if !post.is_first_post?
+          if post.topic.user_chosen_thumbnail_url.present?
+            return Discourse.base_url + post.topic.user_chosen_thumbnail_url
+          else
+            return post.topic.thumbnails[0][:url]
+          end
+        else
+          return nil
         end
       end
 
