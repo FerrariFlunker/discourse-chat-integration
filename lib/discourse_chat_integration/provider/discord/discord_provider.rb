@@ -73,10 +73,10 @@ module DiscourseChatIntegration
             },
             timestamp: DateTime.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
             image: {
-              url: "https://i.imgur.com/ZGPxFN2.jpg"
+              url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"
             },
             thumbnail: {
-              url: "https://i.imgur.com/ZGPxFN2.jpg"
+              url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"
             }           
           }]
         }
