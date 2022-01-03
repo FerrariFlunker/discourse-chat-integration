@@ -51,9 +51,6 @@ module DiscourseChatIntegration
           prefix_message = build_prefix_message(post, rule)
         end
 
-        image_url = build_embed_image(post)
-        thumbnail_url = build_embed_thumbnail(post)
-
         message = {
           content: prefix_message,
           embeds: [{
@@ -75,8 +72,12 @@ module DiscourseChatIntegration
               icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png"              
             },
             timestamp: DateTime.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
-            image: {url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"},
-            thumbnail: {url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"}           
+            image: {
+              url: "https://i.imgur.com/ZGPxFN2.jpg"
+            },
+            thumbnail: {
+              url: "https://i.imgur.com/ZGPxFN2.jpg"
+            }           
           }]
         }
 
@@ -93,31 +94,6 @@ module DiscourseChatIntegration
           return ""
         end
       end
-
-      def self.build_embed_image(post)
-        if post.is_first_post?
-          if post.topic.user_chosen_thumbnail_url
-            return Discourse.base_url + post.topic.user_chosen_thumbnail_url
-          else
-            return post.topic.thumbnails[0][:url]
-          end
-        else
-          return nil
-        end
-      end
-
-      def self.build_embed_thumbnail(post)
-        if !post.is_first_post?
-          if post.topic.user_chosen_thumbnail_url
-            return Discourse.base_url + post.topic.user_chosen_thumbnail_url
-          else
-            return post.topic.thumbnails[0][:url]
-          end
-        else
-          return nil
-        end
-      end
-
 
       def self.trigger_notification(post, channel, rule)
         # Adding ?wait=true means that we actually get a success/failure response, rather than returning asynchronously
