@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "date"
 
 module DiscourseChatIntegration
   module Provider
@@ -40,7 +41,7 @@ module DiscourseChatIntegration
 
         topic = post.topic
 
-        category = ''
+        category = '[uncategorized]'
         if topic.category
           category = (topic.category.parent_category) ? "#{topic.category.parent_category.name}/#{topic.category.name}" : "#{topic.category.name}"
         end
@@ -61,7 +62,17 @@ module DiscourseChatIntegration
               name: display_name,
               url: Discourse.base_url + "/u/" + post.user.username,
               icon_url: ensure_protocol(post.user.small_avatar_url)
-            }
+            },
+            fields: [{
+              name: "Category:",
+              value: "#{category}",
+              inline: true
+            },
+            footer: {
+              text: "aloha.pk",
+              icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png"              
+            },
+            timestamp: "#{DateTime.now.strftime('%m/%d/%Y')}"
           }]
         }
 
