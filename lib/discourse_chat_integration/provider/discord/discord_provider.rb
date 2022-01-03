@@ -75,8 +75,8 @@ module DiscourseChatIntegration
               icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png"              
             },
             timestamp: DateTime.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
-            image: {url: image_url},
-            thumbnail: {url: thumbnail_url}           
+            image: {url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"},
+            thumbnail: {url: "https://community.aloha.pk/uploads/default/optimized/2X/b/bd3d304e7d03033013d837e9939ef55c3fea803a_2_1023x687.png"}           
           }]
         }
 
