@@ -103,7 +103,7 @@ module DiscourseChatIntegration
           if post.topic[:user_chosen_thumbnail_url].present?
             return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic.thumbnails[0][:url]
+            return post.topic[:thumbnails][0][:url]
           end
         else
           return nil
@@ -115,7 +115,7 @@ module DiscourseChatIntegration
           if post.topic[:user_chosen_thumbnail_url].present?
             return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic.thumbnails[0][:url]
+            return post.topic[:thumbnails][0][:url]
           end
         else
           return nil
