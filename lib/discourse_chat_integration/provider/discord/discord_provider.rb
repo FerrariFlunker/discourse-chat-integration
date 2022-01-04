@@ -102,10 +102,10 @@ module DiscourseChatIntegration
         if post.is_first_post?
           if true
           #if post.topic[:user_chosen_thumbnail_url].present?
-            return post.topic.thumbnails[0].url
+            return post.topic["thumbnails"][0].url
             #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic.thumbnails[0].url
+            return post.topic["thumbnails"][0].url
           end
         else
           return nil
@@ -116,10 +116,10 @@ module DiscourseChatIntegration
         if !post.is_first_post?
           if true
           #if post.topic[:user_chosen_thumbnail_url].present?
-            return post.topic.thumbnails[0].url  
+            return post.topic["thumbnails"][0].url 
           #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic.thumbnails[0].url
+            return post.topic["thumbnails"][0].url
           end
         else
           return nil
