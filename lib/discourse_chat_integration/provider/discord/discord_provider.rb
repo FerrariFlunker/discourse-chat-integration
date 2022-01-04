@@ -100,25 +100,25 @@ module DiscourseChatIntegration
 
       def self.build_embed_image(post)
         if post.is_first_post?
-          if post.topic.user_chosen_thumbnail_url.present?
-            return Discourse.base_url + post.topic.user_chosen_thumbnail_url
+          if post.topic[:user_chosen_thumbnail_url].present?
+            return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
             return post.topic.thumbnails[0][:url]
           end
         else
-          return "https://i.imgur.com/ZGPxFN2.jpg"
+          return nil
         end
       end
 
       def self.build_embed_thumbnail(post)
         if !post.is_first_post?
-          if post.topic.user_chosen_thumbnail_url.present?
-            return Discourse.base_url + post.topic.user_chosen_thumbnail_url
+          if post.topic[:user_chosen_thumbnail_url].present?
+            return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
             return post.topic.thumbnails[0][:url]
           end
         else
-          return "https://i.imgur.com/ZGPxFN2.jpg"
+          return nil
         end
       end
 
