@@ -53,7 +53,7 @@ module DiscourseChatIntegration
 
         image_url = build_embed_image(post)
         thumbnail_url = build_embed_thumbnail(post)
-        category_url = "#{Discourse.base_path}/c"
+        category_url = +"#{Discourse.base_path}/c"
         category_url << "/#{topic.category.parent_category.slug_path.join('/')}" if topic.category.parent_category_id
         category_url << "/#{topic.category.slug_path}"
 
