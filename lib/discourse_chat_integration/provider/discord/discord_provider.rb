@@ -100,10 +100,12 @@ module DiscourseChatIntegration
 
       def self.build_embed_image(post)
         if post.is_first_post?
-          if post.topic[:user_chosen_thumbnail_url].present?
-            return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
+          if true
+          #if post.topic[:user_chosen_thumbnail_url].present?
+            return post.topic.thumbnails[0].url
+            #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic[:thumbnails][0][:url]
+            return post.topic.thumbnails[0].url
           end
         else
           return nil
@@ -112,10 +114,12 @@ module DiscourseChatIntegration
 
       def self.build_embed_thumbnail(post)
         if !post.is_first_post?
-          if post.topic[:user_chosen_thumbnail_url].present?
-            return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
+          if true
+          #if post.topic[:user_chosen_thumbnail_url].present?
+            return post.topic.thumbnails[0].url  
+          #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic[:thumbnails][0][:url]
+            return post.topic.thumbnails[0].url
           end
         else
           return nil
