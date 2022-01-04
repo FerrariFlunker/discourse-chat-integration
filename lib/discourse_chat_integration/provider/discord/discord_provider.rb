@@ -68,11 +68,11 @@ module DiscourseChatIntegration
             },
             fields: [{
               name: "Category:",
-              value: "#{category}"
+              value: "[#{category}](#{category.url})"
             }],
             footer: {
               text: "aloha.pk",
-              icon_url: "https://community.aloha.pk/uploads/default/original/1X/a740f07af5d758ce95531052bf73bf7fd9f8b7c6.png"              
+              icon_url: SiteSetting.chat_integration_discord_message_footer_logo_url              
             },
             timestamp: DateTime.now.strftime('%Y-%m-%dT%H:%M:%S.%L%z'),
             image: {
@@ -88,7 +88,7 @@ module DiscourseChatIntegration
       end
 
       def self.build_prefix_message(post, rule)
-        msg_fields = {'{username}' => post.user.username, '{title}' =>  post.topic.title, "{category}" => post.topic.category.name}
+        msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name}
         if post.is_first_post? && rule.new_topic_prefix
           return rule.new_topic_prefix.gsub(/{(.*?)}/, msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix
@@ -100,12 +100,10 @@ module DiscourseChatIntegration
 
       def self.build_embed_image(post)
         if post.is_first_post?
-          if true
-          #if post.topic[:user_chosen_thumbnail_url].present?
+          if post.topic.image_url.present?
             return post.topic.image_url
-            #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic.image_url
+            return SiteSetting.chat_integration_discord_default_thumbnail_url
           end
         else
           return nil
@@ -114,12 +112,10 @@ module DiscourseChatIntegration
 
       def self.build_embed_thumbnail(post)
         if !post.is_first_post?
-          if true
-          #if post.topic[:user_chosen_thumbnail_url].present?
+          if post.topic.image_url.present?
             return post.topic.image_url
-          #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic.image_url
+            return SiteSetting.chat_integration_discord_default_thumbnail_url
           end
         else
           return nil
