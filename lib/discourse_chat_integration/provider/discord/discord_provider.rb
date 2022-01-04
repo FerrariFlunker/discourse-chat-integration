@@ -99,14 +99,13 @@ module DiscourseChatIntegration
       end
 
       def self.build_embed_image(post)
-        Rails.logger.debug "DEBUG: #{post.inspect}" if Rails.logger.debug?
         if post.is_first_post?
           if true
           #if post.topic[:user_chosen_thumbnail_url].present?
-            return post.topic["thumbnails"][0].url
+            return post.topic.image_url
             #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic["thumbnails"][0].url
+            return post.topic.image_url
           end
         else
           return nil
@@ -117,10 +116,10 @@ module DiscourseChatIntegration
         if !post.is_first_post?
           if true
           #if post.topic[:user_chosen_thumbnail_url].present?
-            return post.topic["thumbnails"][0].url 
+            return post.topic.image_url
           #return Discourse.base_url + post.topic[:user_chosen_thumbnail_url]
           else
-            return post.topic["thumbnails"][0].url
+            return post.topic.image_url
           end
         else
           return nil
