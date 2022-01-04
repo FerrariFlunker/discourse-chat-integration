@@ -99,9 +99,9 @@ module DiscourseChatIntegration
 
       def self.build_prefix_message(post, rule)        
         if post.is_first_post? && rule.new_topic_prefix
-          return rule.new_topic_prefix.gsub(/{(.*?)}/, rules.msg_fields)
+          return rule.new_topic_prefix.gsub(/{(.*?)}/, rule.msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix
-          return rule.new_reply_prefix.gsub(/{(.*?)}/, rules.msg_fields)
+          return rule.new_reply_prefix.gsub(/{(.*?)}/, rule.msg_fields)
         else
           return ""
         end
