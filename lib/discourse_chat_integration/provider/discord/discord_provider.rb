@@ -53,9 +53,9 @@ module DiscourseChatIntegration
 
         image_url = build_embed_image(post)
         thumbnail_url = build_embed_thumbnail(post)
-        category_url = +"#{Discourse.base_path}/c"
+        category_url = +"#{Discourse.base_url}/c"
         category_url << "/#{topic.category.parent_category.slug_path.join('/')}" if topic.category.parent_category_id
-        category_url << "/#{topic.category.slug_path}"
+        category_url << "/#{topic.category.slug}"
 
         message = {
           content: prefix_message,
@@ -71,8 +71,15 @@ module DiscourseChatIntegration
             },
             fields: [{
               name: "Category:",
-              value: "[#{category}](#{category_url})"
-            }],
+              value: "[#{category}](#{category_url})",
+              inline: true
+            },
+            {
+              name: "Tags:",
+              value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
+              inline: true
+            }  
+          ],
             footer: {
               text: "aloha.pk",
               icon_url: SiteSetting.chat_integration_discord_message_footer_logo_url              
@@ -90,12 +97,11 @@ module DiscourseChatIntegration
         message
       end
 
-      def self.build_prefix_message(post, rule)
-        msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name}
+      def self.build_prefix_message(post, rule)        
         if post.is_first_post? && rule.new_topic_prefix
-          return rule.new_topic_prefix.gsub(/{(.*?)}/, msg_fields)
+          return rule.new_topic_prefix.gsub(/{(.*?)}/, rules.msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix
-          return rule.new_reply_prefix.gsub(/{(.*?)}/, msg_fields)
+          return rule.new_reply_prefix.gsub(/{(.*?)}/, rules.msg_fields)
         else
           return ""
         end

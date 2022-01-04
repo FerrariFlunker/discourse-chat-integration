@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class DiscourseChatIntegration::Rule < DiscourseChatIntegration::PluginModel
+  @@msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name}
+
   # Setup ActiveRecord::Store to use the JSON field to read/write these values
   store :value, accessors: [ :channel_id, :type, :group_id, :category_id, :tags, :filter, :new_topic_prefix, :new_reply_prefix ], coder: JSON
 
@@ -50,6 +52,10 @@ class DiscourseChatIntegration::Rule < DiscourseChatIntegration::PluginModel
 
   def self.key_prefix
     'rule:'.freeze
+  end
+
+  def msg_fields
+    @@msg_fields
   end
 
   # We never want an empty array, set it to nil instead
