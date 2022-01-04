@@ -68,7 +68,7 @@ module DiscourseChatIntegration
             },
             fields: [{
               name: "Category:",
-              value: "[#{category}](#{category.url})"
+              value: "[#{category}](#{topic.category.url})"
             }],
             footer: {
               text: "aloha.pk",
@@ -88,7 +88,7 @@ module DiscourseChatIntegration
       end
 
       def self.build_prefix_message(post, rule)
-        msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name}
+        msg_fields = {'{username}' => post.user.username, '{title}' =>  post.topic.title, "{category}" => post.topic.category.name}
         if post.is_first_post? && rule.new_topic_prefix
           return rule.new_topic_prefix.gsub(/{(.*?)}/, msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix
@@ -103,7 +103,8 @@ module DiscourseChatIntegration
           if post.topic.image_url.present?
             return post.topic.image_url
           else
-            return SiteSetting.chat_integration_discord_default_thumbnail_url
+            url = SiteSetting.chat_integration_discord_default_thumbnail_url
+            return 
           end
         else
           return nil
@@ -115,7 +116,8 @@ module DiscourseChatIntegration
           if post.topic.image_url.present?
             return post.topic.image_url
           else
-            return SiteSetting.chat_integration_discord_default_thumbnail_url
+            url = SiteSetting.chat_integration_discord_default_thumbnail_url
+            return url
           end
         else
           return nil
