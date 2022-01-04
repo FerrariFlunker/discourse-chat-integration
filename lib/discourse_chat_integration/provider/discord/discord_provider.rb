@@ -56,7 +56,7 @@ module DiscourseChatIntegration
         category_url = +"#{Discourse.base_url}/c"
         category_url << "/#{topic.category.parent_category.slug_path.join('/')}" if topic.category.parent_category_id
         category_url << "/#{topic.category.slug}"
-        tags = "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}"
+        tags = "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ' '}"
 
         message = {
           content: prefix_message,
