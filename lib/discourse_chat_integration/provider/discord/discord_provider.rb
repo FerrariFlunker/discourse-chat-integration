@@ -99,6 +99,7 @@ module DiscourseChatIntegration
       end
 
       def self.build_embed_image(post)
+        Rails.logger.debug "DEBUG: #{post.inspect}" if Rails.logger.debug?
         if post.is_first_post?
           if true
           #if post.topic[:user_chosen_thumbnail_url].present?
