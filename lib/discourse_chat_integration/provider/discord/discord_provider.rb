@@ -56,6 +56,7 @@ module DiscourseChatIntegration
         category_url = +"#{Discourse.base_url}/c"
         category_url << "/#{topic.category.parent_category.slug_path.join('/')}" if topic.category.parent_category_id
         category_url << "/#{topic.category.slug}"
+        tags = "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}"
 
         message = {
           content: prefix_message,
@@ -70,17 +71,17 @@ module DiscourseChatIntegration
               icon_url: ensure_protocol(post.user.small_avatar_url)
             },
             fields: [
-            {
-              name: "Category:",
-              value: "[#{category}](#{category_url})",
-              inline: true
-            },
-            {
-              name: "Tags:",
-              value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
-              inline: true
-            }  
-          ],
+              {
+                name: "Category:",
+                value: "[#{category}](#{category_url})",
+                inline: true
+              },
+              {
+                name: "Tags:",
+                value: tags,
+                inline: true
+              }  
+            ],
             footer: {
               text: "aloha.pk",
               icon_url: SiteSetting.chat_integration_discord_message_footer_logo_url              
