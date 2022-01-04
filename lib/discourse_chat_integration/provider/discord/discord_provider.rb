@@ -53,6 +53,9 @@ module DiscourseChatIntegration
 
         image_url = build_embed_image(post)
         thumbnail_url = build_embed_thumbnail(post)
+        category_url = "#{Discourse.base_path}/c"
+        category_url << "/#{topic.category.parent_category.slug_path.join('/')}" if topic.category.parent_category_id
+        category_url << "/#{topic.category.slug_path}"
 
         message = {
           content: prefix_message,
@@ -68,7 +71,7 @@ module DiscourseChatIntegration
             },
             fields: [{
               name: "Category:",
-              value: "[#{category}](https://community.aloha.pk/)"
+              value: "[#{category}](#{category_url})"
             }],
             footer: {
               text: "aloha.pk",
