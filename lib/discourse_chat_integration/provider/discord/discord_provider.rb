@@ -69,16 +69,17 @@ module DiscourseChatIntegration
               url: Discourse.base_url + "/u/" + post.user.username,
               icon_url: ensure_protocol(post.user.small_avatar_url)
             },
-            fields: [{
+            fields: [
+              {
               name: "Category:",
               value: "[#{category}](#{category_url})",
-              inline: true
-            },
-            {
+              inline: true,
+              },
+              {
               name: "Tags:",
               value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
-              inline: true
-            }  
+              inline: true,
+              },  
           ],
             footer: {
               text: "aloha.pk",
