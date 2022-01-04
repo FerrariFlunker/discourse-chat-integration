@@ -70,16 +70,16 @@ module DiscourseChatIntegration
               icon_url: ensure_protocol(post.user.small_avatar_url)
             },
             fields: [
-              {
+            {
               name: "Category:",
               value: "[#{category}](#{category_url})",
-              inline: true,
-              },
-              {
+              inline: true
+            },
+            {
               name: "Tags:",
               value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : ''}",
-              inline: true,
-              },  
+              inline: true
+            }  
           ],
             footer: {
               text: "aloha.pk",
@@ -98,11 +98,12 @@ module DiscourseChatIntegration
         message
       end
 
-      def self.build_prefix_message(post, rule)        
+      def self.build_prefix_message(post, rule)
+        msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name}        
         if post.is_first_post? && rule.new_topic_prefix
-          return rule.new_topic_prefix.gsub(/{(.*?)}/, rule.msg_fields)
+          return rule.new_topic_prefix.gsub(/{(.*?)}/, msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix
-          return rule.new_reply_prefix.gsub(/{(.*?)}/, rule.msg_fields)
+          return rule.new_reply_prefix.gsub(/{(.*?)}/, msg_fields)
         else
           return ""
         end
