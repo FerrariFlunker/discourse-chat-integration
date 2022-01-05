@@ -77,7 +77,7 @@ module DiscourseChatIntegration
               },
               {
                 name: "Tags:",
-                value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : nil}",
+                value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : '\u200b'}",
                 inline: true
               }  
             ],
