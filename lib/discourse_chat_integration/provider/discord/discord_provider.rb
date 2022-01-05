@@ -56,6 +56,7 @@ module DiscourseChatIntegration
         category_url = +"#{Discourse.base_url}/c"
         category_url << "/#{topic.category.parent_category.slug_path.join('/')}" if topic.category.parent_category_id
         category_url << "/#{topic.category.slug}"
+        formatted_tags = topic.tags.present? ? topic.tags.map {|tag| "(#{tag.name})[#{Discourse.base_url}/tag/#{tag.name}]"} : ["(none)[#{Discourse.base_url}/tag/none]"]
 
         message = {
           content: prefix_message,
@@ -77,7 +78,7 @@ module DiscourseChatIntegration
               },
               {
                 name: "Tags:",
-                value: "#{topic.tags.present? ? topic.tags.map(&:name).join(', ') : '\u200b'}",
+                value: formatted_tags.join(", "),
                 inline: true
               }  
             ],
