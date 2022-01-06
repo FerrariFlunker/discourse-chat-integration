@@ -100,7 +100,7 @@ module DiscourseChatIntegration
       end
 
       def self.build_prefix_message(post, rule)
-        msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name}    
+        msg_fields = {'{username}' => post.user.username, '{title}' =>  "**#{post.topic.title}**", "{category}" => post.topic.category.name, "{views}" => "#{post.topic.views}", "{likes}" => "#{post.topic.like_count}"}    
         if post.is_first_post? && rule.new_topic_prefix
           return rule.new_topic_prefix.gsub(/{(.*?)}/, msg_fields)
         elsif !post.is_first_post? && rule.new_reply_prefix

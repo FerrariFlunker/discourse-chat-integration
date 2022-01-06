@@ -55,9 +55,9 @@ export default RestModel.extend({
   filter: "watch",
   type: "normal",
   error_key: null,
-  new_topic_prefix: null,
-  new_reply_prefix: null,
-  MSG_FIELDS: "Fields: {username}, {creator}, {title}, {category}",
+  new_topic_prefix: "{username} just posted a new topic in the {category} category!",
+  new_reply_prefix: "{username} just posted a reply to {title} in the {category} category!",
+  MSG_FIELDS: "Fields: {username}, {title}, {category}, {views}, {likes}",
 
   @observes("type")
   removeUnneededInfo() {
